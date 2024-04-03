@@ -12,12 +12,17 @@ class PolicyNetwork(nn.Module):
         pass
 
 # Load the trained model
+# Load the trained model
 @st.cache(allow_output_mutation=True)
 def load_model():
-    model = PolicyNetwork(n_units_out=5)  # Initialize your model
-    model.load_state_dict(torch.load("model1.pth"))  # Load the trained model weights
+    # Load the model and map it to CPU if CUDA is not available
+    if torch.cuda.is_available():
+        model = torch.load("model1.pth")
+    else:
+        model = torch.load("model1.pth", map_location=torch.device('cpu'))
     model.eval()  # Set the model to evaluation mode
     return model
+
 
 # Function to run an episode and return the score
 def run_episode(model):
