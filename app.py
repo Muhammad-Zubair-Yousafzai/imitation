@@ -7,4 +7,4 @@ st.title("ONNX Model Score Prediction")
 if st.button("Predict"):
     with st.spinner("Predicting..."):
         score = 756  # Your desired score
-    st.success(f"Predicted score: {score}")
+    st.success(f"score: {score}")
