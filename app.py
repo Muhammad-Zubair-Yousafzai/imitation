@@ -1,35 +1,33 @@
 import streamlit as st
-import onnxruntime
-import numpy as np
+import torch
+from your_agent_module import Agent, run_episode  # Import your agent-related modules
 
-# Load the ONNX model
-onnx_model_path = "expert.onnx"
-  # Use raw string literal
+# Load the trained model
+model_path = "model1.pth"
+model = torch.load(model_path)
 
-ort_session = onnxruntime.InferenceSession(onnx_model_path)
+# Function to run an episode and calculate the score
+def calculate_score():
+    # Instantiate the agent with your trained model and device
+    train_policy = Agent(model, device)
 
-# Define the function to make predictions
-def predict_score(input_data):
-    # Preprocess input data if needed
-    # Perform inference
-    input_name = ort_session.get_inputs()[0].name
-    output_name = ort_session.get_outputs()[0].name
-    result = ort_session.run([output_name], {input_name: input_data})
-    score = result[0]
+    # Run an episode with the agent
+    score = run_episode(train_policy, show_progress=True, capture_video=True)
+    
     return score
 
-# Streamlit UI
-st.title("ONNX Model Score Prediction")
+# Main function to run the Streamlit app
+def main():
+    st.title("Agent Score Prediction")
 
-# Input section
-st.write("Enter input data:")
-# Add input components here based on your model's input requirements
+    # Button to calculate the score
+    if st.button("Calculate Score"):
+        # Calculate the score
+        score = calculate_score()
+        
+        # Display the score
+        st.write(f"Score: {score:.2f}")
 
-# Example input (modify based on your model's input requirements)
-input_data = np.random.randn(1, 4, 84, 84).astype(np.float32)
-
-# Prediction
-if st.button("Predict"):
-    with st.spinner("Predicting..."):
-        score = predict_score(input_data)
-    st.success(f"Predicted score: {score}")
+# Run the main function
+if __name__ == "__main__":
+    main()
