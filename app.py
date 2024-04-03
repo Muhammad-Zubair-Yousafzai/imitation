@@ -3,7 +3,8 @@ import onnxruntime
 import numpy as np
 
 # Load the ONNX model
-onnx_model_path = r"C:\Users\dania\OneDrive\Desktop\flask\expert.onnx"  # Use raw string literal
+onnx_model_path = "expert.onnx"
+  # Use raw string literal
 
 ort_session = onnxruntime.InferenceSession(onnx_model_path)
 
