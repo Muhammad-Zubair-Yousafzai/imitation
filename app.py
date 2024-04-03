@@ -1,26 +1,42 @@
 import streamlit as st
-import onnxruntime
-import numpy as np
+import torch
 
-# Load the ONNX model
-onnx_model_path = "expert.onnx"
+# Define the PolicyNetwork class
+class PolicyNetwork(nn.Module):
+    def __init__(self, n_units_out):
+        super(PolicyNetwork, self).__init__()
+        # Define your network architecture here
 
-ort_session = onnxruntime.InferenceSession(onnx_model_path)
+    def forward(self, x):
+        # Implement the forward pass of your network here
+        pass
 
-# Streamlit UI
-st.title("ONNX Model Score Prediction")
+# Load the trained model
+@st.cache(allow_output_mutation=True)
+def load_model():
+    model = PolicyNetwork(n_units_out=5)  # Initialize your model
+    model.load_state_dict(torch.load("model1.pth"))  # Load the trained model weights
+    model.eval()  # Set the model to evaluation mode
+    return model
 
-# Input section
-st.write("Enter input data:")
-# Add input components here based on your model's input requirements
-# For example, you can use st.number_input, st.text_input, etc.
+# Function to run an episode and return the score
+def run_episode(model):
+    # Write code to run an episode and calculate the score
+    score = 0  # Placeholder for the score
+    return score
 
-# Example input (replace with your actual input data)
-# Modify this part to gather input data from the user
-input_data = np.random.randn(1, 4, 84, 84).astype(np.float32)
+# Main Streamlit app
+def main():
+    st.title("Model Score Viewer")
 
-# Prediction
-if st.button("Predict"):
-    with st.spinner("Predicting..."):
-        score = predict_score(input_data)
-    st.success(f"Predicted score: {score}")
+    # Load the trained model
+    model = load_model()
+
+    # Button to run an episode and display the score
+    if st.button("Run Episode"):
+        # Run an episode and get the score
+        score = run_episode(model)
+        st.write(f"Score: {score}")
+
+if __name__ == "__main__":
+    main()
