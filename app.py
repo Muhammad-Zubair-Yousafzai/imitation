@@ -1,14 +1,16 @@
 import streamlit as st
 import torch
-import torch.nn as nn
-# Define the PolicyNetwork class
+from torch import nn
+from collections import OrderedDict
+
+# Define the neural network architecture
 class PolicyNetwork(nn.Module):
-    def __init__(self, n_units_out):
+    def __init__(self):
         super(PolicyNetwork, self).__init__()
-        # Define your network architecture here
+        # Define your neural network architecture here
 
     def forward(self, x):
-        # Implement the forward pass of your network here
+        # Define the forward pass of your neural network
         pass
 
 # Load the trained model
@@ -27,25 +29,12 @@ def load_model():
     model.eval()  # Set the model to evaluation mode
     return model
 
-
-# Function to run an episode and return the score
-def run_episode(model):
-    # Write code to run an episode and calculate the score
-    score = 0  # Placeholder for the score
-    return score
-
-# Main Streamlit app
+# Main function to run the app
 def main():
-    st.title("Model Score Viewer")
-
     # Load the trained model
     model = load_model()
 
-    # Button to run an episode and display the score
-    if st.button("Run Episode"):
-        # Run an episode and get the score
-        score = run_episode(model)
-        st.write(f"Score: {score}")
+    # Add your Streamlit app code here
 
 if __name__ == "__main__":
     main()
