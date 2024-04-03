@@ -1,6 +1,6 @@
 import streamlit as st
 import torch
-
+import torch.nn as nn
 # Define the PolicyNetwork class
 class PolicyNetwork(nn.Module):
     def __init__(self, n_units_out):
